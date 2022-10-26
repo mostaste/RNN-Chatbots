@@ -1,0 +1,145 @@
+# Starts a conversational shell for the user
+import time
+import requests
+import json
+from pprint import pprint
+import datetime
+import sys
+import random
+
+##################################################################################################################################################################################################################
+
+""" Code Commences  """
+
+
+def TopHeader():
+    print("\n")
+    print("----------------------------\n")
+    print(" Conversation Shell Started\n")
+    print("----------------------------\n")
+
+
+def StartMessage():
+    i = random.randint(1, 4);
+    print(Alice, end = '')
+
+    if (i == 1):
+        print("Good morning.")
+    if (i == 2):
+        print("Have a Good Day.")
+    if (i == 3):
+        print("Rise and Shine.")
+    if (i == 4):
+        print("Time for Work.")
+    if (i == 5):
+        print("Go get them.")
+
+    print();
+
+
+def StartFirstTime():
+    print(Alice, end = '')
+    print('Hello, I am Alice.  What is your name?')
+    name = input(Me)
+    print(Alice + 'Hello, ' + name)
+    time.sleep(1)
+    print(Alice + 'It is nice to meet you. ')
+
+
+def Date(conversationShell):
+    now = datetime.datetime.now()
+    if not conversationShell:
+        print('Date is ' + str(now.day) + '/' + str(now.month) + '/' + str(now.year))
+    else:
+        print(Alice + 'Date is ' + str(now.day) + '/' + str(now.month) + '/' + str(now.year))
+
+
+def Time(conversationShell):
+    now = datetime.datetime.now()
+    if not conversationShell:
+        print('Time is ' + str(now.hour) + ':' + str(now.minute))
+    else:
+        print(Alice + 'Time is ' + str(now.hour) + ':' + str(now.minute))
+
+
+def Weather(conversationShell):
+    cityWeather = 'Bangkok'
+    apiWeather = '0ccef92205ec3f8d935db746408d8245'
+    res = requests.get('https://api.openweathermap.org/data/2.5/weather?q=' + cityWeather +
+                       '&APPID=' + apiWeather + '&units=metric')
+    weather = str(res.json()['weather'][0]['main'])
+    temperature = str(res.json()['main']['temp'])
+
+    if not conversationShell:
+        print('Weather - ' + weather)
+        print('Temperature - ' + temperature + '°C\n')
+
+    else:
+        print(Alice + 'Weather - ' + weather)
+        print(Alice + 'Temperature - ' + temperature + '°C\n')
+
+
+def Note():
+    #TO-DO Save Note taking
+
+
+
+
+'''
+cityWeather = 'Bangkok'
+apiWeather = '0ccef92205ec3f8d935db746408d8245'
+def weatherData(query):
+
+    res = requests.get('https://api.openweathermap.org/data/2.5/weather?q=' + query +
+                       '&APPID=' + apiWeather + '&units=metric')
+    return res.json()
+
+def Weather(result):
+    weather = str(result['weather'][0]['main'])
+    temperature = str(result['main']['temp'])
+    print('Weather - ' + weather)
+    print('Temperature - ' + temperature +'°C')
+    print()
+'''
+
+Alice = "Alice:  "
+Me = "Me:  "
+inConversationShell = False
+
+TopHeader()
+Date(inConversationShell)
+Time(inConversationShell)
+Weather(inConversationShell)
+# StartFirstTime()
+StartMessage()
+inConversationShell = True
+
+while inConversationShell:
+    # TO-DO Turn it into a string and decaptialize all letters
+    tempInput = input(Me)
+    tempInput = tempInput.lower()
+
+    if (tempInput == "date"):
+        print()
+        Date(inConversationShell)
+        print()
+    if (tempInput == "time"):
+        print()
+        Time(inConversationShell)
+        print()
+    if (tempInput == "weather"):
+        print()
+        Weather(inConversationShell)
+
+    if (tempInput == "exit"):
+        inConversationShell = False
+        break;
+
+print("\n")
+print(Alice + ":  Goodbye...")
+time.sleep(5)
+
+##################################################################################################################################################################################################################
+
+
+
